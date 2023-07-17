@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Device Admin{% endblock %}
+
+{% block content %}
+
+<style>
+    .dashboard-container {
+        background-color: #222222;
+        padding: 20px;
+        color: #ffffff;
+    }
+
+    .info-box {
+        margin-bottom: 20px;
+    }
+
+    .box-height {
+        height: 516px;
+    }
+</style>
+
+<div class="dashboard-container">
+    <h1 class="text-center">Dashboard</h1><br>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card info-box box-height">
+                <div class="card-body">
+                    <h5 class="card-title text-center">General information</h5>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Total Devices:</td>
+                                <td><strong>{{ total_devices }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total Devices Borrowed:</td>
+                                <td><strong>{{ total_devices_loan }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total Blocked Devices:</td>
+                                <td><strong>{{ total_devices_block }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total External Devices:</td>
+                                <td><strong>{{ total_devices_ext }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total Devices Under Analysis for Return:</td>
+                                <td><strong>{{ total_devices_ana_devolution }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total Devices Returned:</td>
+                                <td><strong>{{ total_devices_devolution }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total Devices Available:</td>
+                                <td><strong>{{ total_devices_free }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total Transactions:</td>
+                                <td><strong>{{ total_transactions }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total Users:</td>
+                                <td><strong>{{ total_users }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card info-box">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Stock Chart</h5>
+                    <div id="actions-graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card box-height">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Devices Allocated Per User</h5>
+                    <div id="devices_user_graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card box-height">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Amount Devices by Models</h5>
+                    <div id="devices_graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card box-height">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Storage of Organization</h5>
+                    <div id="storage_graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card box-height">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Activity by Device</h5>
+                    <div id="device-graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card box-height">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Activity by User</h5>
+                    <div id="user-graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+    
+</div>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script>
+    var actionsGraph = {{ actions_graphJSON|safe }};
+    Plotly.newPlot('actions-graph', actionsGraph.data, actionsGraph.layout);
+
+    var userGraph = {{ user_graphJSON|safe }};
+    Plotly.newPlot('user-graph', userGraph.data, userGraph.layout);
+
+    var deviceGraph = {{ device_graphJSON|safe }};
+    Plotly.newPlot('device-graph', deviceGraph.data, deviceGraph.layout);
+
+    var devices_user_graphJSON = {{ devices_user_graphJSON|safe }};
+    Plotly.newPlot('devices_user_graph', devices_user_graphJSON.data, devices_user_graphJSON.layout);
+
+    var storage_graphJSON = {{ storage_graphJSON|safe }};
+    Plotly.newPlot('storage_graph', storage_graphJSON.data, storage_graphJSON.layout);
+
+    var devices_graphJSON = {{ devices_graphJSON|safe }};
+    Plotly.newPlot('devices_graph', devices_graphJSON.data, devices_graphJSON.layout);
+</script>
+
+<script>
+    window.onload = function() {
+        document.getElementById('loader-container').style.display = 'none';
+    };
+</script>
+{% endblock %}
