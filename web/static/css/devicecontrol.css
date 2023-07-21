@@ -1,0 +1,86 @@
+/* #tableAccessories {
+       height: 610px; 
+    }
+    #tableSimCards {
+        height: 610px; 
+    }
+    #tableAllDevices {
+        height: 800px; 
+    } 
+*/
+
+/* Estilos para centralizar o spinner e aplicar o efeito de desfoque */
+#loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Cor de fundo com efeito de desfoque */
+    z-index: 9999;
+}
+
+.disabled-button {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.form-switch {
+    padding-top: 6px;
+    color: white;
+}
+
+/* Estilos para o modo noturno */
+.dark-mode {
+    background-color: #000000;
+}
+
+.dark-mode label {
+    color: white;
+}
+
+.dark-mode h1 {
+    color: white;
+}
+
+.dark-mode h2 {
+    color: white;
+}
+
+.dark-mode p {
+    color: white;
+}
+
+.dark-mode div.dtr-modal-close h2 {
+    color: black;
+}
+
+.dark-mode a.paginate_button.next {
+    color: white !important;
+}
+
+.dark-mode a.paginate_button.previous {
+    color: white !important;
+}
+
+@keyframes piscar {
+    0% {
+        color: red;
+    }
+
+    50% {
+        color: white;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+.piscar {
+    animation: piscar 1s infinite;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="icon" href="https://img.icons8.com/?size=512&id=hZlemPex4QR9&format=png">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/devicecontrol.css') }}">
+    </head>
+    <body>
+        <div id="loader-container">
+            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand"><img src="https://img.icons8.com/?size=512&id=hZlemPex4QR9&format=png" alt="Logo" width="30" height="30" style="filter: invert(100%);"> DeviceControl</a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav nav-underline">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {% if (request.path == url_for('all_devices') or request.path == url_for('all_accessories')) or request.path == url_for('all_sim_cards') %}active{% endif %}" href="#"
+                                role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Resources
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url_for('all_devices') }}">All Devices</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('all_accessories') }}">Accessories</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('all_sim_cards') }}">SIM Cards</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == url_for('myresources') %}active{% endif %}" href="{{ url_for('myresources') }}">My Resources</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == url_for('history') %}active{% endif %}" href="{{ url_for('history') }}">History</a>
+                        </li>
+                        {% if (info_user[3] == 'ADMIN') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {% if (request.path == url_for('admin_history') or request.path == url_for('admin_accounts')) or request.path == url_for('info_dash') %}active{% endif %}" href="#"
+                                role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url_for('admin_accounts') }}">Control Users</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('admin_history') }}">All Transactions</a></li>
+                                <li><a class="dropdown-item" href="#">Admin Devices</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('info_dash') }}">Info-Dash</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {% if request.path == url_for('account') %}active{% endif %}" href="#"
+                                role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Account
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url_for('account') }}">Information</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="toggleDarkMode">
+                                <label class="form-check-label" for="toggleDarkMode">Dark Mode</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for category, message in messages %}
+                        {% if category == 'success' %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                        {% if category == 'error' %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %} {% endblock %}
+
+        <br>
+        <footer class="footer fixed-bottom bg-dark text-center">
+            <div class="container">
+                <span class="text-white" >Device Control &copy; Developer by <a href="mailto:gutemf@motorola.com" style="color: white;">MME_AUTOMATION_TEAM</a> - Eld-Manaus</span>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+        <script type= "text/javascript" src= "{{ url_for('static',filename='js/validations.js') }}"></script>
+        <script type= "text/javascript" src= "{{ url_for('static',filename='js/darkMode.js') }}"></script>
+        <script type= "text/javascript" src= "{{ url_for('static',filename='js/loadScreen.js') }}"></script>
+        <script type= "text/javascript" src= "{{ url_for('static',filename='js/renderTables.js') }}"></script>
+    </body>
+</html>
