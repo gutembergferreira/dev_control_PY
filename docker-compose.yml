@@ -2,11 +2,21 @@ version: '3'
 services:
   device_control:
     build: .
+    env_file:
+      - .env
     restart: always
-    volumes:
-      - .:/usr/src/app/
-      - ./logs:/usr/src/app/logs
     ports:
-      - 5000:5000
+      - ${PORT_APP}:${PORT_APP}
     image: devicecontrol:latest
-    container_name: MOTDeviceControl
+    container_name: MOTDeviceControl    
+    volumes:
+      - ${PWD}:/usr/src/app/
+    networks:
+      - networkDevControl
+    dns: 
+      - 8.8.8.8
+      - 8.8.4.4
+      
+networks:
+  networkDevControl:
+    driver: bridge

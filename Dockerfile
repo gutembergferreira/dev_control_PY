@@ -1,7 +1,9 @@
 FROM python:slim
 
 WORKDIR /usr/src/app
-EXPOSE 5000
+
+ENV PORT_APP=${PORT_APP}
+EXPOSE ${PORT_APP}
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
