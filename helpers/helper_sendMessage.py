@@ -3,9 +3,9 @@ import requests
 def sendMessageWebhook(user_one, user_two, action, device=None, accessorie=None, simcard=None):
     try:
         ## WEBHOOK DE PRODUÇÃO
-        #url_webhook = "https://chat.googleapis.com/v1/spaces/AAAA0DJtNoU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=YVn-fwD5B3IIkeQu4UfSNcsEHJW04fBBAUtNW8MifgU"
+        url_webhook = "https://chat.googleapis.com/v1/spaces/AAAA0DJtNoU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=YVn-fwD5B3IIkeQu4UfSNcsEHJW04fBBAUtNW8MifgU"
         ## WEBHOOK DE TESTE
-        url_webhook = "https://chat.googleapis.com/v1/spaces/AAAAci2yLXI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=pgSZlYiwlz_NPC7Q66o64RV8zCM9rq8mv1-6GgTKB3I"
+        #url_webhook = "https://chat.googleapis.com/v1/spaces/AAAAci2yLXI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=pgSZlYiwlz_NPC7Q66o64RV8zCM9rq8mv1-6GgTKB3I"
         if (action == 'Loan'):
             if (device):
                 msg = f"<users/{user_one}> realizou o Empréstimo do dispositivo {device}."
